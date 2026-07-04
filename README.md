@@ -22,6 +22,7 @@ Organized by discipline, with each folder's contents sequenced to match the char
 | `05-product/` | MVP definition, PRDs, prototypes |
 | `06-pilot-and-launch/` | Pilot strategy, production roadmap, product roadmap, launch plan |
 | `07-continuous-learning/` | Learning log, metrics tracking against charter success metrics |
+| `app/` | Next.js application code (deployed via Vercel — set Vercel's Root Directory project setting to `app`). Scaffolded ahead of the charter's Prototype Development stage (14) as infrastructure setup, not a signal that architecture/design work is done — see `03-systems-architecture/` and `04-design/` before building real features here. |
 
 ## How Docs Work
 
