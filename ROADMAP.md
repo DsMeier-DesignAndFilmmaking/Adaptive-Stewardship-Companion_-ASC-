@@ -14,8 +14,8 @@ Goal: narrow the charter's 14 customer types into a real ICP, and test whether t
 
 | Step | File | Status |
 |---|---|---|
-| Industry research | `01-research/industry-research.md` | not-started |
-| Market landscape + competitive analysis | `01-research/market-landscape-analysis.md`, `01-research/competitive-analysis.md` | not-started |
+| Industry research | `01-research/industry-research.md` | draft — 2026-07-04 (desk research; key finding: visitor/ecology trade-off is already costly and real at flagship parks, adaptive management is 50-yr-old doctrine industry already believes but under-executes) |
+| Market landscape + competitive analysis | `01-research/market-landscape-analysis.md`, `01-research/competitive-analysis.md` | draft — 2026-07-04 (desk research; no direct competitor found combining visitor + ecological signal in one recommendation engine — genuine white space, unvalidated willingness-to-pay) |
 | Ecosystem mapping (what systems do target orgs already run?) | `01-research/ecosystem-maps.md` | draft — 2026-07-04 (desk research; working ICP candidates: botanical gardens/nature centers, eco-lodges/guest ranches) |
 | Customer segmentation → pick ICP | `01-research/customer-segmentation.md` | draft — 2026-07-04 (desk research only; needs discovery interviews to confirm) |
 | Customer discovery interviews (target: 10-15 across 2-3 candidate segments) | `01-research/customer-discovery.md` | not-started — next step |
@@ -29,10 +29,10 @@ Goal: turn research into a falsifiable product vision and a scoped opportunity.
 
 | Step | File | Status |
 |---|---|---|
-| Problem statements | `02-strategy/problem-statements.md` | not-started |
-| Opportunity assessment (score vs. charter's 8-criteria decision framework) | `02-strategy/opportunity-assessment.md` | not-started |
-| Product vision (concrete first decision ASC improves) | `02-strategy/product-vision.md` | not-started |
-| Product strategy + business model + pricing direction | `02-strategy/product-strategy.md`, `business-model.md`, `pricing-strategy.md` | not-started |
+| Problem statements | `02-strategy/problem-statements.md` | draft — 2026-07-04 (hypothesis-tier; two problem statements, gardens/nature centers + eco-lodges/ranches, pending discovery interviews) |
+| Opportunity assessment (score vs. charter's 8-criteria decision framework) | `02-strategy/opportunity-assessment.md` | not-started — recommended next before locking MVP scope |
+| Product vision (concrete first decision ASC improves) | `02-strategy/product-vision.md` | draft — 2026-07-04 (working vision: daily zone/trail/experience recommendation with rationale + confidence, gardens/nature centers first) |
+| Product strategy + business model + pricing direction | `02-strategy/product-strategy.md`, `business-model.md` | draft — 2026-07-04 (wedge: single decision, one segment, manual data first; working ACV target $8K-$20K/yr, org-based pricing). `pricing-strategy.md` still not-started, folded into business-model.md for now |
 
 **Exit criteria for Phase 2:** a named MVP wedge and a defensible answer to "why would someone pay for this."
 
@@ -64,6 +64,6 @@ Goal: design the system and experience around the MVP wedge only — not the ful
 
 ## Immediate Next Action
 
-Desk research on customer segmentation and ecosystem mapping is done (2026-07-04) — see both files for findings and sources. Working recommendation: prioritize discovery interviews with botanical gardens/nature centers and mid-size eco-lodges/guest ranches; deprioritize state/national parks (procurement timeline) and regenerative agriculture (unproven visitor-experience fit) for now.
+Phase 1 (all five research docs) and most of Phase 2 (problem statements, product vision, product strategy, business model) are now drafted (2026-07-04) — all desk-research-informed hypotheses, none yet tested against a real customer. Working thread across all of it: lead with botanical gardens/nature centers, MVP wedge is a single daily zone/trail/experience recommendation (rationale + confidence) built on manual staff-logged data plus existing visitor-ops data, org-based pricing in the $8K-$20K/yr range, eco-lodges/guest ranches as the second-segment generalization test.
 
-This is desk research only, not validated knowledge — the charter's Validation Standard requires customer interviews before any of this locks into `02-strategy/product-vision.md`. Next step: `01-research/customer-discovery.md` — recruit and interview 10-15 orgs across the two priority segments.
+None of this is validated knowledge — the charter's Validation Standard requires customer interviews before any of it locks in. **This is now the hard stop:** `01-research/customer-discovery.md` (10-15 interviews across the two priority segments) must happen before `02-strategy/opportunity-assessment.md`, architecture (Phase 3), or any real feature-building proceeds. Interviews should directly test: whether the problem statements are actually felt as daily pain, whether "daily" is the right decision cadence, whether staff want this at all versus feeling second-guessed, and what these orgs would actually pay.
