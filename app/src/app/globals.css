@@ -58,7 +58,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "DM Sans", system-ui, sans-serif;
-  overflow-x: hidden;
+  /* clip, not hidden: prevents horizontal scroll without making <body> a
+     scroll container (hidden coerces overflow-y to auto, breaking sticky). */
+  overflow-x: clip;
 }
 
 *,
@@ -66,4 +68,28 @@ body {
 *::after {
   box-sizing: border-box;
   min-width: 0;
+}
+
+/* Scenario-switch fade: paired with a `key={activeScenarioId}` remount so it
+   replays on every switch. Signals "this region just refreshed" without a
+   hard instant cut. Kept short and subtle per the calm/authoritative tone. */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 300ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+  }
 }

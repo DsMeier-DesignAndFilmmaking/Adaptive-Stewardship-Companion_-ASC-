@@ -13,9 +13,24 @@ export type CardStatus =
   | "dismissed"
   | "overridden";
 
+// Property-level triage (Phase C). Ordering priority: critical → monitor →
+// opportunity. This is a lens over recommendations, not a severity score.
+export type AttentionLevel = "critical" | "monitor" | "opportunity";
+
+// Qualitative landscape status (Phase D) — never a numeric score.
+export type LandscapeStatus =
+  | "healthy"
+  | "high-use"
+  | "recovery"
+  | "monitoring"
+  | "sensitive";
+
 export type ScenarioId = "rain" | "bloom" | "stale-signal" | "override";
 
-// Drives the static Log Observation glimpse so it stays coherent per scenario.
+// Discovery instrumentation (Phase E).
+export type FeedbackResponse = "yes" | "maybe" | "no";
+export type CardFeedback = { response?: FeedbackResponse; note?: string };
+
 export type ObservationSample = {
   areaName: string;
   condition: string;
@@ -23,17 +38,24 @@ export type ObservationSample = {
   note: string;
 };
 
-// The per-scenario "dashboard state": the operating moment each scenario sets
-// up. Switching the active scenario swaps the whole demo context independently.
+export type LandscapeZone = {
+  area: string; // must match a card's areaName for tap-to-filter
+  status: LandscapeStatus;
+  note?: string;
+};
+
+// The per-scenario "operating moment." Switching scenarios swaps the whole
+// briefing, feed, landscape strip, and observation glimpse independently.
 export type Scenario = {
   id: ScenarioId;
-  label: string; // scenario switcher label
-  theme: string; // operational theme from the scenario library
-  libraryRef: string; // traceability to research-beta-scenario-library.md
-  day: string; // operating moment shown in the header
-  weather: string; // header weather line
-  scene: string; // one-line scene set for facilitator + header context
+  label: string;
+  theme: string;
+  libraryRef: string;
+  day: string;
+  weather: string;
   decisionOwner: string;
+  briefing: string[]; // Phase A — morning briefing, paragraph per line
+  landscape: LandscapeZone[]; // Phase D — glanceable zone statuses
   observation: ObservationSample;
 };
 
@@ -43,16 +65,18 @@ export type RecommendationCard = {
   areaName: string;
   areaType: string;
   action: RecommendationAction;
+  attention: AttentionLevel; // Phase C
   title: string;
   shortReason: string;
-  landscapeCondition: string; // current physical / ecological state of the area
+  expectedOutcome: string; // Phase B — "what happens if I do this"
+  landscapeCondition: string;
   confidence: Confidence;
   confidenceReason: string;
   evidence: string[];
   missingEvidence?: string;
   alternative?: string;
-  visitorView: string; // guest-facing framing (what front desk says)
-  stewardshipView: string; // stewardship rationale (why the land steward cares)
+  visitorView: string;
+  stewardshipView: string;
   decisionOwner: string;
   interviewPrompt: string;
   initialStatus: CardStatus;
@@ -61,7 +85,10 @@ export type RecommendationCard = {
 export type BetaState = {
   activeScenarioId: ScenarioId;
   selectedCardId: string;
+  selectedArea: string; // single-select Landscape Health tab; "all" = no scope
   cardStatuses: Record<string, CardStatus>;
   overrideReasons: Record<string, string>;
+  feedback: Record<string, CardFeedback>;
   observationGlimpseOpen: boolean;
+  detailOpen: boolean;
 };

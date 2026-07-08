@@ -1,5 +1,7 @@
-import { statusLabels } from "@/lib/research-beta/constants";
+import { statusDescriptions, statusLabels } from "@/lib/research-beta/constants";
 import type { CardStatus } from "@/lib/research-beta/types";
+
+import { Tooltip } from "./Tooltip";
 
 type StatusChipProps = {
   status: CardStatus;
@@ -14,10 +16,12 @@ const statusClassNames: Record<CardStatus, string> = {
 
 export function StatusChip({ status }: StatusChipProps) {
   return (
-    <span
-      className={`inline-flex min-h-7 items-center rounded-full border px-2.5 text-xs font-medium ${statusClassNames[status]}`}
-    >
-      {statusLabels[status]}
-    </span>
+    <Tooltip label={statusDescriptions[status]}>
+      <span
+        className={`inline-flex min-h-7 items-center rounded-full border px-2.5 text-xs font-medium ${statusClassNames[status]}`}
+      >
+        {statusLabels[status]}
+      </span>
+    </Tooltip>
   );
 }

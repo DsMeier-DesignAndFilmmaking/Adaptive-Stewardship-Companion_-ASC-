@@ -1,12 +1,16 @@
-import { actionDescriptions, actionLabels } from "@/lib/research-beta/constants";
 import type {
+  CardFeedback,
   CardStatus,
+  FeedbackResponse,
   RecommendationCard,
 } from "@/lib/research-beta/types";
 
 import { ActionButtons } from "./ActionButtons";
+import { ActionChip } from "./ActionChip";
+import { AttentionChip } from "./AttentionChip";
 import { ConfidenceChip } from "./ConfidenceChip";
 import { EvidenceList } from "./EvidenceList";
+import { FeedbackPanel } from "./FeedbackPanel";
 import { OverridePanel } from "./OverridePanel";
 import { StatusChip } from "./StatusChip";
 
@@ -15,26 +19,18 @@ type RecommendationDetailProps = {
   status: CardStatus;
   overrideReason: string;
   isOverrideOpen: boolean;
+  feedback: CardFeedback;
   onAccept: () => void;
   onDismiss: () => void;
   onOpenOverride: () => void;
   onCancelOverride: () => void;
   onSubmitOverride: () => void;
   onOverrideReasonChange: (reason: string) => void;
+  onFeedbackRespond: (response: FeedbackResponse) => void;
+  onFeedbackNoteChange: (note: string) => void;
   onBack?: () => void;
 };
 
-const actionClassNames = {
-  open: "border-primary/20 bg-primary/8 text-primary",
-  promote: "border-green-200 bg-green-50 text-green-700",
-  rest: "border-amber-200 bg-amber-50 text-amber-700",
-  restrict: "border-orange-200 bg-orange-50 text-orange-700",
-  close: "border-destructive/25 bg-destructive/10 text-destructive",
-};
-
-// Section eyebrow label — matches the reference's in-card label convention
-// (10px mono, uppercase, tracked, muted) used consistently across every
-// content card in this detail panel.
 const sectionLabelClassName =
   "text-[10px] font-mono uppercase tracking-[0.12em] text-muted-foreground";
 
@@ -43,12 +39,15 @@ export function RecommendationDetail({
   status,
   overrideReason,
   isOverrideOpen,
+  feedback,
   onAccept,
   onDismiss,
   onOpenOverride,
   onCancelOverride,
   onSubmitOverride,
   onOverrideReasonChange,
+  onFeedbackRespond,
+  onFeedbackNoteChange,
   onBack,
 }: RecommendationDetailProps) {
   return (
@@ -59,21 +58,20 @@ export function RecommendationDetail({
       <div className="border-b border-border p-4 md:p-5">
         <div className="flex flex-wrap items-center gap-2">
           {onBack ? (
+            // Always visible now — the detail is a sliding drawer over the
+            // action list on every breakpoint, not a desktop side-by-side
+            // pane, so its close control isn't mobile-only anymore.
             <button
               type="button"
               onClick={onBack}
-              className="mr-auto min-h-10 rounded-md border border-border px-3 text-sm font-semibold text-foreground transition hover:border-muted-foreground/50 focus:outline-none focus-visible:ring-3 focus-visible:ring-ring/40 lg:hidden"
+              className="mr-auto min-h-10 rounded-md border border-border px-3 text-sm font-semibold text-foreground transition hover:border-muted-foreground/50 focus:outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
             >
-              Back
+              Close
             </button>
           ) : null}
-          <span
-            className={`inline-flex min-h-8 items-center rounded-full border px-3 text-xs font-semibold ${actionClassNames[card.action]}`}
-            aria-label={`${actionLabels[card.action]} recommendation: ${actionDescriptions[card.action]}`}
-          >
-            {actionLabels[card.action]}
-          </span>
-          <ConfidenceChip confidence={card.confidence} />
+          <AttentionChip level={card.attention} />
+          <ActionChip action={card.action} />
+          <ConfidenceChip confidence={card.confidence} reason={card.confidenceReason} />
           <StatusChip status={status} />
         </div>
         <p className="mt-5 text-sm font-medium text-muted-foreground">
@@ -91,6 +89,22 @@ export function RecommendationDetail({
       </div>
 
       <div className="grid gap-5 p-4 md:p-5">
+        {/* Expected outcome leads the body — "what happens if I do this." */}
+        <section
+          aria-labelledby="expected-outcome-title"
+          className="rounded-lg border border-primary/20 bg-primary/5 p-4"
+        >
+          <h3
+            id="expected-outcome-title"
+            className="text-[10px] font-mono uppercase tracking-[0.12em] text-primary"
+          >
+            Expected outcome
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-foreground">
+            {card.expectedOutcome}
+          </p>
+        </section>
+
         <section aria-labelledby="landscape-condition-title">
           <h3 id="landscape-condition-title" className={sectionLabelClassName}>
             Landscape condition
@@ -128,8 +142,6 @@ export function RecommendationDetail({
           </section>
         ) : null}
 
-        {/* Neutral cards, colored label only — color stays in the small
-            eyebrow, not the card surface, matching every other card here. */}
         <div className="grid gap-4 md:grid-cols-2">
           <section
             aria-labelledby="visitor-view-title"
@@ -196,6 +208,12 @@ export function RecommendationDetail({
             onCancel={onCancelOverride}
           />
         ) : null}
+
+        <FeedbackPanel
+          feedback={feedback}
+          onRespond={onFeedbackRespond}
+          onNoteChange={onFeedbackNoteChange}
+        />
       </div>
     </section>
   );

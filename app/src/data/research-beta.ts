@@ -10,8 +10,9 @@ export const propertyProfile = {
 };
 
 // Each scenario is a self-contained operating moment. Switching scenarios in the
-// rail swaps the header context, the Today feed, and the observation glimpse so
-// any scenario can be demonstrated independently during an interview.
+// bar swaps the header context, the daily briefing, the attention/feed, the
+// landscape strip, and the observation glimpse so any scenario can be
+// demonstrated independently during an interview.
 export const scenarios: Scenario[] = [
   {
     id: "rain",
@@ -20,9 +21,20 @@ export const scenarios: Scenario[] = [
     libraryRef: "Library A1",
     day: "Saturday, 7:15 AM",
     weather: "Clearing after 0.8 in overnight rain",
-    scene:
-      "Peak spring weekend. Overnight rain has passed and a clear, busy day is forecast.",
     decisionOwner: "Maria Okonkwo, Operations Director",
+    briefing: [
+      "Good morning. Overnight rain has passed — a clear, high-traffic day is ahead.",
+      "The Wetland Boardwalk took standing water, and its habitat edge widens when walked wet. ASC recommends resting it this morning and directing visitors to Ridge View Loop instead.",
+      "Everything else is steady. Re-check the boardwalk by mid-morning to consider reopening.",
+    ],
+    landscape: [
+      { area: "Wetland Boardwalk", status: "recovery", note: "Resting after rain" },
+      { area: "Ridge View Loop", status: "high-use", note: "Promoted alternative" },
+      { area: "Creekside Path", status: "monitoring", note: "Unverified since storm" },
+      { area: "Pollinator Garden Zone", status: "healthy" },
+      { area: "North Meadow Trail", status: "healthy" },
+      { area: "Oak Grove Beds", status: "healthy" },
+    ],
     observation: {
       areaName: "Wetland Boardwalk",
       condition: "Standing water",
@@ -37,9 +49,19 @@ export const scenarios: Scenario[] = [
     libraryRef: "Library B1",
     day: "Sunday, 8:30 AM",
     weather: "Warm and dry, 74°F by noon",
-    scene:
-      "Peak pollinator bloom on a warm weekend. Demand is concentrating on the garden and parking fills by 11.",
     decisionOwner: "Maria Okonkwo, Operations Director",
+    briefing: [
+      "Good morning. Peak pollinator bloom lands on a warm weekend, and demand is concentrating on the garden.",
+      "Soft bed edges are vulnerable under crowding. ASC recommends timed entry at the Pollinator Garden and actively promoting the Oak Grove beds as a genuine second stop.",
+      "Parking is expected to fill by late morning — stage arrivals early.",
+    ],
+    landscape: [
+      { area: "Pollinator Garden Zone", status: "sensitive", note: "Peak bloom, soft edges" },
+      { area: "Oak Grove Beds", status: "high-use", note: "Promoted second stop" },
+      { area: "Ridge View Loop", status: "healthy" },
+      { area: "Wetland Boardwalk", status: "healthy" },
+      { area: "North Meadow Trail", status: "healthy" },
+    ],
     observation: {
       areaName: "Pollinator Garden Zone",
       condition: "Soft bed edges",
@@ -54,9 +76,19 @@ export const scenarios: Scenario[] = [
     libraryRef: "Library E1",
     day: "Wednesday, 7:40 AM",
     weather: "Overcast, light wind",
-    scene:
-      "An ordinary mid-week day. North Meadow has normal demand but no fresh condition report.",
     decisionOwner: "Maria Okonkwo, Operations Director",
+    briefing: [
+      "Good morning. An ordinary mid-week day, with steady demand across the property.",
+      "North Meadow has normal visitor interest but no condition report in nine days — its last note predates this week's rain. ASC is holding it at low confidence rather than guessing.",
+      "A quick field check this morning would confirm the tread and let staff recommend it with confidence.",
+    ],
+    landscape: [
+      { area: "North Meadow Trail", status: "monitoring", note: "No report in 9 days" },
+      { area: "Wetland Boardwalk", status: "healthy" },
+      { area: "Ridge View Loop", status: "healthy" },
+      { area: "Pollinator Garden Zone", status: "healthy" },
+      { area: "Creekside Path", status: "healthy" },
+    ],
     observation: {
       areaName: "North Meadow Trail",
       condition: "Unverified",
@@ -71,9 +103,19 @@ export const scenarios: Scenario[] = [
     libraryRef: "Library E2 / Blueprint S4",
     day: "Saturday, 7:20 AM",
     weather: "Clear after midweek rain",
-    scene:
-      "ASC recommends closing Creekside Path for erosion — but the weekend lead knows a repair crew is already scheduled.",
     decisionOwner: "Maria Okonkwo, Operations Director",
+    briefing: [
+      "Good morning. Conditions are clear after midweek rain.",
+      "ASC recommends closing Creekside Path — an undercut bank near the second footbridge worsened in the rain. Note that a volunteer repair crew is scheduled for 9 AM, which may change the call from “closed all day” to “closed until repaired.”",
+      "Ridge View Loop is the best alternative to offer in the meantime.",
+    ],
+    landscape: [
+      { area: "Creekside Path", status: "recovery", note: "Closed for repair" },
+      { area: "Ridge View Loop", status: "high-use", note: "Suggested alternative" },
+      { area: "Wetland Boardwalk", status: "healthy" },
+      { area: "North Meadow Trail", status: "healthy" },
+      { area: "Pollinator Garden Zone", status: "healthy" },
+    ],
     observation: {
       areaName: "Creekside Path",
       condition: "Bank erosion",
@@ -91,9 +133,12 @@ export const recommendationCards: RecommendationCard[] = [
     areaName: "Wetland Boardwalk",
     areaType: "Boardwalk / habitat edge",
     action: "rest",
+    attention: "critical",
     title: "Rest Wetland Boardwalk this morning",
     shortReason:
       "Standing water was reported after overnight rain, and the wetland edge is sensitive to foot traffic while saturated.",
+    expectedOutcome:
+      "Reduce erosion and habitat-edge damage while the ground drains — likely reopenable by midday.",
     landscapeCondition:
       "Saturated. Standing water across the east approach and soft habitat-edge soil that compacts and widens under foot traffic when wet.",
     confidence: "medium",
@@ -121,9 +166,12 @@ export const recommendationCards: RecommendationCard[] = [
     areaName: "Ridge View Loop",
     areaType: "Trail loop",
     action: "promote",
+    attention: "opportunity",
     title: "Promote Ridge View Loop as the morning alternative",
     shortReason:
       "The loop was clear yesterday, handles wet conditions better, and gives staff a positive place to send visitors.",
+    expectedOutcome:
+      "Keep visitors on a high-quality route and absorb the boardwalk detour without crowding.",
     landscapeCondition:
       "Firm, well-drained tread. Signage clear as of yesterday afternoon; surface sheds rain quickly.",
     confidence: "high",
@@ -153,9 +201,12 @@ export const recommendationCards: RecommendationCard[] = [
     areaName: "Pollinator Garden Zone",
     areaType: "Garden zone",
     action: "restrict",
+    attention: "critical",
     title: "Use timed entry at Pollinator Garden",
     shortReason:
       "Peak bloom is drawing visitor demand, but bed edges are soft after rain and likely to degrade under crowding.",
+    expectedOutcome:
+      "Protect soft bed edges at peak bloom while preserving access through timed entry.",
     landscapeCondition:
       "Peak bloom. Bed margins soft after Friday rain and vulnerable to trampling where visitors queue and step off-path.",
     confidence: "medium",
@@ -183,9 +234,12 @@ export const recommendationCards: RecommendationCard[] = [
     areaName: "Oak Grove Beds",
     areaType: "Garden / picnic grove",
     action: "promote",
+    attention: "opportunity",
     title: "Promote Oak Grove beds as the second bloom stop",
     shortReason:
       "A durable, shaded second bloom area that pulls pressure off the main Pollinator Garden during peak demand.",
+    expectedOutcome:
+      "Relieve pressure on the main garden and give visitors a genuine second bloom stop.",
     landscapeCondition:
       "Durable turf and gravel paths. Secondary bloom opening now with low current use and shaded seating capacity.",
     confidence: "high",
@@ -215,9 +269,12 @@ export const recommendationCards: RecommendationCard[] = [
     areaName: "North Meadow Trail",
     areaType: "Meadow trail",
     action: "open",
+    attention: "monitor",
     title: "Keep North Meadow open, but send a field check",
     shortReason:
       "Visitor demand is moderate, but the latest condition report is 9 days old, so ASC should not recommend a stronger action.",
+    expectedOutcome:
+      "Confirm meadow-edge condition and raise confidence before staff steer groups there.",
     landscapeCondition:
       "Unverified. The last condition note is 9 days old and predates this week's rain, so current tread condition is unknown.",
     confidence: "low",
@@ -249,9 +306,12 @@ export const recommendationCards: RecommendationCard[] = [
     areaName: "Creekside Path",
     areaType: "Streamside path",
     action: "close",
+    attention: "critical",
     title: "Close Creekside Path for bank erosion",
     shortReason:
       "An undercut bank near the second footbridge worsened after rain — a safety and erosion risk under foot traffic.",
+    expectedOutcome:
+      "Prevent bank collapse and injury risk until the volunteer crew stabilizes the footbridge.",
     landscapeCondition:
       "Actively eroding. Undercut bank and soft edge near the second footbridge after this week's rain.",
     confidence: "medium",
